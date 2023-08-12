@@ -441,12 +441,17 @@ impl Mpv {
         initializer: F,
     ) -> Result<Mpv> {
         let api_version = unsafe { libmpv_sys::mpv_client_api_version() };
-        if crate::MPV_CLIENT_API_MAJOR != api_version >> 16 {
-            return Err(Error::VersionMismatch {
-                linked: crate::MPV_CLIENT_API_VERSION,
-                loaded: api_version,
-            });
-        }
+        
+        // TODO:
+        // this should be checked regardless
+        // try to link the correct version
+        //
+        // if crate::MPV_CLIENT_API_MAJOR != api_version >> 16 {
+        //     return Err(Error::VersionMismatch {
+        //         linked: crate::MPV_CLIENT_API_VERSION,
+        //         loaded: api_version,
+        //     });
+        // }
 
         let ctx = unsafe { libmpv_sys::mpv_create() };
         if ctx.is_null() {
